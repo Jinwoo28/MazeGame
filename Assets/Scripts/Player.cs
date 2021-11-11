@@ -16,22 +16,16 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Transform MinimaSmall = null;
 
-    private int CoinCount = 0;
-    
-    private bool warpable = true;
+    private float StackTime = 0f;
+    private float TimeValume = 60;
+    float RemainTime = 0;
+
+    private int SprayNum = 0;
 
     private Vector3 MoveDir = Vector3.zero;
 
     private Vector3 Playerforward = Vector3.zero;
 
-    private bool playerDie = false;
-    public enum PlayerMode
-    {
-        Idle,
-        powerUp,
-    }
-
-    public PlayerMode playermode = PlayerMode.Idle;
     
     void Start()
     {
@@ -41,22 +35,17 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        StackTime += Time.deltaTime;
+        RemainTime = TimeValume - StackTime;
 
-            isMove();
+        isMove();
             LookAt();
 
     }
 
-    private void ModeChange()
+    public float RemainTime_()
     {
-        switch (playermode)
-        {
-            case PlayerMode.Idle:
-                break;
-            case PlayerMode.powerUp:
-                break;
-
-        }
+        return RemainTime;
     }
 
     private void isMove()
@@ -83,74 +72,37 @@ public class Player : MonoBehaviour
 
     }
 
-    public Vector3 GetPlayerforward()
+    public void magnifier()
     {
-        return Playerforward;
+        Vector3 UpPosition = new Vector3(0, 5, 0);
+        MinimaSmall.position += UpPosition;
     }
 
-    public Vector3 GetMove()
+    public void SpeedUp()
     {
-        return MoveDir;
+        MoveSpeed += 1;
     }
 
-    public PlayerMode GetPlayermode()
+    public void Spary()
     {
-        return playermode;
+        SprayNum += 3;
     }
 
-    public void PowerUp()
+    public void TimeUp()
     {
-        playermode = PlayerMode.powerUp;
-        StopCoroutine("PowerCanCel");
-        StartCoroutine("PowerCanCel");
-    }
-
-    IEnumerator PowerCanCel() 
-    {
-        yield return new WaitForSeconds(5.0f);
-        playermode = PlayerMode.Idle;
-    }
-
-    public void CoinCountUp()
-    {
-        CoinCount++;
-    }
-
-    public int GetCoinCount()
-    {
-        return CoinCount;
-    }
-
-    public bool GetPlayerDie()
-    {
-        return playerDie;
-    }
-
-    public void PlayerDie()
-    {
-        playerDie = true;
-    }
-
-    public void PlayerRevive()
-    {
-        playerDie = false;
-    }
-
-    public bool PlayerLife()
-    {
-        return playerDie;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(playermode == PlayerMode.powerUp)
+        if(RemainTime+7 >= 60)
         {
-            if (other.CompareTag("Enemy"))
-            {
-                other.GetComponent<Enemy>().scatter();
-            }
+            StackTime = 0;
         }
+        else StackTime -= 7;
+
+        Debug.Log("Á¦¹ß");
     }
+
+ 
+
+
+  
 
 
 }

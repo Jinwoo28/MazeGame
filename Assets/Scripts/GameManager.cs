@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Image remaintimeImage = null;
 
-    private float TimeValue = 100;
+    private float TimeValue = 60;
 
     [SerializeField]
     private RawImage FullMiniMap = null;
@@ -37,38 +37,31 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        StackTime += Time.deltaTime;
-        float RemainTime = TimeValue - StackTime;
-        TimeText.text = "남은 시간 : " + ((int)RemainTime).ToString("D3") + "초";
-        remaintimeImage.fillAmount = RemainTime / TimeValue;
-        Debug.Log(RemainTime / TimeValue);
-
-        if (Input.GetMouseButtonDown(0)&& !player.GetComponent<Player>().GetPlayerDie()) 
-        {
-            minimapchange = !minimapchange;
-        }
-
-
+        float remainTime = player.GetComponent<Player>().RemainTime_();
+        TimeText.text = "남은 시간 : " + ((int)remainTime).ToString("D3") + "초";
+        remaintimeImage.fillAmount = remainTime / TimeValue;
+       
     }
+
+
 
 
     public void LoadGameScene()
     {
         SceneManager.LoadScene(1);
-        player.GetComponent<Player>().PlayerRevive();
         gameStart = true;
         Time.timeScale = 1;
+
     }
 
 
     public void PlayerDie()
     {
-        if (player.GetComponent<Player>().GetPlayerDie())
-        {
+
             GameOverUi.SetActive(true);
             gameStart = false;
             Time.timeScale = 0;
-        }
+
     }
 
     public void MinimapChange1()

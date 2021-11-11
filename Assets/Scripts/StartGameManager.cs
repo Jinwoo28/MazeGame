@@ -14,6 +14,23 @@ public class StartGameManager : MonoBehaviour
     [SerializeField]
     private GameObject Subscription = null;
 
+    [SerializeField]
+    private GameObject Level = null;
+
+    private void Update()
+    {
+
+    }
+
+    public void ChoiceLevel()
+    {
+        Level.SetActive(true);
+    }
+
+    public void ExitLevel()
+    {
+        Level.SetActive(false);
+    }
 
     public void Subscription_()
     {
@@ -35,6 +52,11 @@ public void Subscription_1()
         Subscription1.SetActive(true);
         Subscription2.SetActive(false);
         Subscription.SetActive(false);
+    }
+
+    public void GameExit()
+    {
+        Application.Quit();
     }
 
 

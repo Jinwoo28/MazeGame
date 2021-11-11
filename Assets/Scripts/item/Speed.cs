@@ -2,24 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pink : Enemy
+public class Speed : Spawnitem
 {
     // Start is called before the first frame update
-   override protected void Start()
+    void Start()
     {
-        base.Start();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        ColorChange();
-        Moveing();
-        modechange();
+        SetForward();
     }
-    protected override void ChasePattern()
+    protected override void Eatitem(Player player)
     {
-        PatternPink();
+        player.SpeedUp();
     }
-
 }

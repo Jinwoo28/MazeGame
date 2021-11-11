@@ -4,17 +4,24 @@ using UnityEngine;
 
 public class MazeManager : MonoBehaviour
 {
-    public int with = 3;
-    public int height = 3;
+    private int with = 0;
+    private int height = 0;
+
+    [SerializeField] private Transform Cam = null;
 
     private CellScr[,] cellmap;
     private List<CellScr> cellHistoryList;
     public CellScr cellPrefab;
+
+    [SerializeField]
+    private GameObject[] SpawnItem = null;
     void Start()
     {
+        with = SystemManager.instance.GetGameLevel_();
+        height = SystemManager.instance.GetGameLevel_();
         BatchCells();
         MakeMaze(cellmap[0, 0]);
-      
+
         cellmap[with-1, height-1].isrightWall = false;
     }
 
@@ -31,6 +38,16 @@ public class MazeManager : MonoBehaviour
                 Cell.transform.localPosition = new Vector3(x * 5, 0, y * 5);
                 Cell.index  =  new Vector2Int(x, y);
                 cellmap[x, y] = Cell;
+
+                int i = Random.Range(0, 10);
+                int j = Random.Range(0, 3);
+                if(i==1)
+                {
+                   GameObject tmp =  Instantiate(SpawnItem[j], cellmap[x, y].SpawnPoint.transform);
+                    tmp.transform.localScale = Vector3.one;
+                    tmp.GetComponent<Spawnitem>().Cam = Cam;
+                   
+                }
             }
         }
     }
@@ -42,7 +59,7 @@ public class MazeManager : MonoBehaviour
         {
             CellScr nextCell = neighbors[Random.Range(0, neighbors.Length)];
             ConnectCell(startCell, nextCell);
-            Debug.Log("Start Cell index : " + startCell.index +" ->"+ nextCell.index);
+          
             cellHistoryList.Add(nextCell);
             MakeMaze(nextCell);
         }

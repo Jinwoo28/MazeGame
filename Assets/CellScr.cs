@@ -15,9 +15,15 @@ public class CellScr : MonoBehaviour
     public GameObject backWall = null;
     public GameObject rightWall = null;
     public GameObject leftWall = null;
+    public GameObject FloorWall = null;
+    public GameObject SpawnPoint = null;
+
+
+
+
     void Start()
     {
-        
+       
     }
 
     // Update is called once per frame
@@ -40,4 +46,7 @@ public class CellScr : MonoBehaviour
     {
         return isforwordWall && isbackWall && isleftWall && isrightWall;
     }
+
+
+
 }
