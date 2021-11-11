@@ -34,6 +34,8 @@ public class CellScr : MonoBehaviour
         leftWall.SetActive(isleftWall);
     }
 
+  
+
     public bool CheckAllWall()
     {
         return isforwordWall && isbackWall && isleftWall && isrightWall;

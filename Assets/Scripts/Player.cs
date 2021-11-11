@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
 
     private void isMove()
     {
-        Debug.Log("??");
+
         float Z = Input.GetAxisRaw("Vertical");
         float X = Input.GetAxisRaw("Horizontal");
   
