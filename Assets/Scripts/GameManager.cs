@@ -13,18 +13,19 @@ public class GameManager : MonoBehaviour
     private GameObject player = null;
 
     [SerializeField]
-    private Text text = null;
+    private Text TimeText = null;
 
     [SerializeField]
-    private Transform AmountCoin = null;
+    private Image remaintimeImage = null;
+
+    private float TimeValue = 100;
 
     [SerializeField]
     private RawImage FullMiniMap = null;
     [SerializeField]
     private GameObject SmallMiniMap = null;
 
-    private int GoalCount = 0;
-    private int Count = 0;
+    private float StackTime = 0f;
 
     private bool minimapchange = true;
 
@@ -33,34 +34,14 @@ public class GameManager : MonoBehaviour
 
  
 
-    //private void Awake()
-    //{
-    //    foreach(Transform child in AmountCoin)
-    //    {
-    //        GoalCount++;
-    //    }
-
-    //}
 
     private void Update()
     {
-        //if (gameStart)
-        //{
-        //    Cursor.lockState = CursorLockMode.Locked;
-        //}
-        //else
-        //{
-        //    Cursor.lockState = CursorLockMode.None;
-        //}
-        //text.text = "Coin : " + Count.ToString("D2");
-
-        //PlayerDie();
-
-      //  MinimapChange1();
-        
-       // SetCoinCount();
-
-
+        StackTime += Time.deltaTime;
+        float RemainTime = TimeValue - StackTime;
+        TimeText.text = "남은 시간 : " + ((int)RemainTime).ToString("D3") + "초";
+        remaintimeImage.fillAmount = RemainTime / TimeValue;
+        Debug.Log(RemainTime / TimeValue);
 
         if (Input.GetMouseButtonDown(0)&& !player.GetComponent<Player>().GetPlayerDie()) 
         {
@@ -70,11 +51,6 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void SetCoinCount()
-    {
-        Count = GoalCount - player.GetComponent<Player>().GetCoinCount();
-        if(Count == 0) { SceneManager.LoadScene(2); }
-    }
 
     public void LoadGameScene()
     {

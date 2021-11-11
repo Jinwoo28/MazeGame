@@ -14,7 +14,7 @@ public class MazeManager : MonoBehaviour
     {
         BatchCells();
         MakeMaze(cellmap[0, 0]);
-        cellmap[0, 0].isleftWall = false;
+      
         cellmap[with-1, height-1].isrightWall = false;
     }
 
@@ -53,7 +53,7 @@ public class MazeManager : MonoBehaviour
                 CellScr lastCell = cellHistoryList[cellHistoryList.Count - 1];
                 cellHistoryList.Remove(lastCell);
                 MakeMaze(lastCell);
-                Debug.Log(lastCell.index);
+            //    Debug.Log(lastCell.index);
             }
         }
     }
