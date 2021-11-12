@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -21,8 +21,6 @@ public class GameManager : MonoBehaviour
     private float TimeValue = 60;
 
     [SerializeField]
-    private RawImage FullMiniMap = null;
-    [SerializeField]
     private GameObject SmallMiniMap = null;
 
     private float StackTime = 0f;
@@ -31,47 +29,78 @@ public class GameManager : MonoBehaviour
 
     private bool gameStart = true;
 
+    [SerializeField]
+    private GameObject PopupManu = null;
 
- 
+    float remainTime = 0;
+
+    private bool checkGameStart = false;
+
+
+    [SerializeField]
+    private Text GetCurrentScore = null;
+    private void Awake()
+    {
+        Time.timeScale = 1;
+    }
 
 
     private void Update()
     {
-        float remainTime = player.GetComponent<Player>().RemainTime_();
+        remainTime = player.GetComponent<Player>().RemainTime_();
         TimeText.text = "남은 시간 : " + ((int)remainTime).ToString("D3") + "초";
         remaintimeImage.fillAmount = remainTime / TimeValue;
-       
-    }
 
+        GetCurrentScore.text = "현재 점수 : " + ((int)SystemManager.instance.GetCurrentScore()).ToString();
+        PlayerDie();
+        checkGameStart = true;
 
-
-
-    public void LoadGameScene()
-    {
-        SceneManager.LoadScene(1);
-        gameStart = true;
-        Time.timeScale = 1;
+        SystemManager.instance.CountScore(remainTime);
 
     }
 
 
     public void PlayerDie()
     {
-
+        if (remainTime <= 0&&checkGameStart)
+        {
             GameOverUi.SetActive(true);
-            gameStart = false;
             Time.timeScale = 0;
-
+        }
     }
 
-    public void MinimapChange1()
+    public void StartGameScene()
     {
-        FullMiniMap.enabled = minimapchange;
-        SmallMiniMap.SetActive(!minimapchange);
+        SystemManager.instance.StartScene();
     }
 
+    public void ReStart()
+    {
+        Time.timeScale = 1;
+        SystemManager.instance.GameReStart();
+    }
 
+    public void Exitgame()
+    {
+        SystemManager.instance.EndGame();
+    }
 
+    public void ToggleOnOff(bool value)
+    {
+        if (value) SmallMiniMap.SetActive(true);
+
+        else SmallMiniMap.SetActive(false);
+    }
+
+    public void PopupOpen()
+    {
+        PopupManu.SetActive(true);
+    }
+
+    public void PopupClose()
+    {
+        PopupManu.SetActive(false);
+    }
 
 
 }

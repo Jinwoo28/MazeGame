@@ -21,7 +21,7 @@ public class Spawnitem : MonoBehaviour
     public void SetForward()
     {
         itemname.forward = Cam.forward;
-        Debug.Log("ddd");
+ 
 
     }
     private void OnTriggerEnter(Collider other)

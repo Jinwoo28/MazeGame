@@ -8,6 +8,7 @@ public class MazeManager : MonoBehaviour
     private int height = 0;
 
     [SerializeField] private Transform Cam = null;
+    [SerializeField] private ParticleSystem FinishLine = null;
 
     private CellScr[,] cellmap;
     private List<CellScr> cellHistoryList;
@@ -23,6 +24,7 @@ public class MazeManager : MonoBehaviour
         MakeMaze(cellmap[0, 0]);
 
         cellmap[with-1, height-1].isrightWall = false;
+        Instantiate(FinishLine, cellmap[with - 1, height - 1].FloorWall.transform);
     }
 
     private void BatchCells()
@@ -45,7 +47,7 @@ public class MazeManager : MonoBehaviour
                 {
                    GameObject tmp =  Instantiate(SpawnItem[j], cellmap[x, y].SpawnPoint.transform);
                     tmp.transform.localScale = Vector3.one;
-                    tmp.GetComponent<Spawnitem>().Cam = Cam;
+                   tmp.GetComponent<Spawnitem>().Cam = Cam;
                    
                 }
             }
@@ -70,7 +72,7 @@ public class MazeManager : MonoBehaviour
                 CellScr lastCell = cellHistoryList[cellHistoryList.Count - 1];
                 cellHistoryList.Remove(lastCell);
                 MakeMaze(lastCell);
-            //    Debug.Log(lastCell.index);
+ 
             }
         }
     }

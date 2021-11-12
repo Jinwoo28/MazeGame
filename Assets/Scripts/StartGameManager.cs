@@ -6,12 +6,6 @@ public class StartGameManager : MonoBehaviour
 {
 
     [SerializeField]
-    private GameObject Subscription1 = null;
-
-    [SerializeField]
-    private GameObject Subscription2 = null;
-
-    [SerializeField]
     private GameObject Subscription = null;
 
     [SerializeField]
@@ -36,21 +30,8 @@ public class StartGameManager : MonoBehaviour
     {
         Subscription.SetActive(true);
     }
-public void Subscription_1()
+public void ExitSubscription()
     {
-        Subscription1.SetActive(true);
-        Subscription2.SetActive(false);
-    }
-    public void Subscription_2()
-    {
-        Subscription1.SetActive(false);
-        Subscription2.SetActive(true);
-    }
-
-    public void SubscriptionExit()
-    {
-        Subscription1.SetActive(true);
-        Subscription2.SetActive(false);
         Subscription.SetActive(false);
     }
 

@@ -9,6 +9,8 @@ public class SystemManager : MonoBehaviour
 
     private int Level = 0;
 
+    private float Score = 0;
+
     private void Awake()
     {
         if (instance == null)
@@ -36,13 +38,41 @@ public class SystemManager : MonoBehaviour
 
 public void EndGame()
     {
+        Application.Quit();
+    }
+
+    public void GameClear()
+    {
         SceneManager.LoadScene(2);
     }
+
+    public void GameReStart()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(1);
+    }
+
+    public void StartScene()
+    {
+        SceneManager.LoadScene(0);
+    }
+
 
     public void Debugcheck()
     {
         Debug.Log("Check");
     }
+
+    public void CountScore(float remaintime_)
+    {
+        Score = Level * remaintime_;
+    }
+
+    public float GetCurrentScore()
+    {
+        return Score;
+    }
+
 
 
     

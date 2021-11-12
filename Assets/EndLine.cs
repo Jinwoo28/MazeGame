@@ -2,21 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Speed : Spawnitem
+public class EndLine : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        SetForward();
+        
     }
-    protected override void Eatitem(Player player)
+    private void OnTriggerEnter(Collider other)
     {
-        player.SpeedUp();
+        if (other.CompareTag("Player"))
+        {
+            SystemManager.instance.GameClear();
+            Debug.Log("³¡");
+        }
     }
 }
